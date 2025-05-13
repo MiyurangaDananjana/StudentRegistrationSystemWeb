@@ -1,0 +1,30 @@
+<div *ngIf="isVisible" class="modal show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Student Details</h5>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="loading">Loading...</div>
+                <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+                <div *ngIf="student" class="row">
+                    <div class="col-md-4">
+                        <img *ngIf="photoUrl" [src]="photoUrl" alt="Profile Photo" class="img-thumbnail mb-3 w-100"
+                            style="max-width: 150px; display: block; margin-left: auto; margin-right: auto;" />
+                    </div>
+                    <div class="col-md-8">
+                        <p><strong>First Name:</strong> {{ student.firstName }}</p>
+                        <p><strong>Last Name:</strong> {{ student.lastName }}</p>
+                        <p><strong>Mobile:</strong> {{ student.mobileNumber }}</p>
+                        <p><strong>Email:</strong> {{ student.email }}</p>
+                        <p><strong>NIC:</strong> {{ student.nicNumber }}</p>
+                        <p><strong>Date of Birth:</strong> {{ student.dateOfBirth | date }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="onClose()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

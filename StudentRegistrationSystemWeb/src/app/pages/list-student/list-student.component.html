@@ -1,0 +1,49 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <h4 class="mb-4">Student List</h4>
+
+      <input type="text" class="form-control mb-3" placeholder="Search by name, email or NIC" [(ngModel)]="searchTerm"
+        (input)="filterStudents()" />
+      <table class="table table-bordered table-hover table-striped">
+        <thead class="table-light">
+          <tr>
+            <th class="text-center">First Name</th>
+            <th class="text-center">Last Name</th>
+            <th class="text-center">Mobile</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">NIC</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of filteredStudents">
+            <td class="text-center">{{ student.firstName }}</td>
+            <td class="text-center">{{ student.lastName }}</td>
+            <td class="text-center">{{ student.mobileNumber }}</td>
+            <td class="text-center">{{ student.email }}</td>
+            <td class="text-center">{{ student.nicNumber }}</td>
+            <td class="text-center">
+              <div class="btn-group" role="group" aria-label="Student Actions">
+                <button class="btn btn-sm btn-primary" (click)="manageStudent(student.id)">
+                  Manage
+                </button>
+
+                <button class="btn btn-sm btn-danger">
+                  Delete
+                </button>
+                <button class="btn btn-sm btn-info" (click)="openStudentModal(student.id)">
+                  View
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal Component -->
+  <app-student-details-modal [studentId]="selectedStudentId" [isVisible]="showModal" (close)="closeStudentModal()">
+  </app-student-details-modal>
+</div>

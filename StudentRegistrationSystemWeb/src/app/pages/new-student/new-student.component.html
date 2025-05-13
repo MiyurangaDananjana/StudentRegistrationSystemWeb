@@ -1,0 +1,78 @@
+<div class="container mt-5">
+
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+      <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input formControlName="firstName" type="text" class="form-control form-control-sm" id="firstName">
+          <div class="text-danger"
+            *ngIf="studentForm.get('firstName')?.invalid && studentForm.get('firstName')?.touched">
+            First name is required and must be less than 50 characters.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input formControlName="lastName" type="text" class="form-control form-control-sm" id="lastName">
+          <div class="text-danger" *ngIf="studentForm.get('lastName')?.invalid && studentForm.get('lastName')?.touched">
+            Last name is required and must be less than 50 characters.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="mobile" class="form-label">Mobile Number</label>
+          <input formControlName="mobile" type="text" class="form-control form-control-sm" id="mobile">
+          <div class="text-danger" *ngIf="studentForm.get('mobile')?.invalid && studentForm.get('mobile')?.touched">
+            Mobile number is required and must be 10 digits.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input formControlName="email" type="email" class="form-control form-control-sm" id="email">
+          <div class="text-danger" *ngIf="studentForm.get('email')?.invalid && studentForm.get('email')?.touched">
+            Enter a valid email.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="nic" class="form-label">NIC</label>
+          <input formControlName="nic" type="text" class="form-control form-control-sm" id="nic">
+          <div class="text-danger" *ngIf="studentForm.get('nic')?.invalid && studentForm.get('nic')?.touched">
+            Enter a valid NIC (9 digits + V or 12 digits).
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dob" class="form-label">DOB</label>
+          <input formControlName="dob" type="date" class="form-control form-control-sm" id="dob">
+          <div class="text-danger" *ngIf="studentForm.get('dob')?.invalid && studentForm.get('dob')?.touched">
+            Date of birth is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="address" class="form-label">Address</label>
+          <textarea formControlName="address" class="form-control form-control-sm" id="address"></textarea>
+          <div class="text-danger" *ngIf="studentForm.get('address')?.invalid && studentForm.get('address')?.touched">
+            Address is required (max 250 characters).
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="fileInfo" class="form-label">Profile Photo</label>
+          <input type="file" class="form-control form-control-sm" id="fileInfo" (change)="onFileSelected($event)"
+            accept="image/*" />
+          <div class="text-danger" *ngIf="fileError">
+            Profile photo is required.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
