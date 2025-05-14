@@ -17,8 +17,8 @@ export class StudentServiceService {
   }
 
 
-  getAllStudents(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}Students`);
+  getAllStudents(page: number = 1, pageSize: number = 10): Observable<any> {
+    return this.http.get<any>(`/api/students?pageNumber=${page}&pageSize=${pageSize}`);
   }
 
   getStudentById(id: number): Observable<any> {

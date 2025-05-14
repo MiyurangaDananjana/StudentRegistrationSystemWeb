@@ -18,10 +18,16 @@ import { Router } from '@angular/router';
 })
 export class ListStudentComponent implements OnInit {
   students: any[] = [];
-  selectedStudentId: number | null = null;  // Hold student ID
+  selectedStudentId: number | null = null;
   showModal: boolean = false;
   searchTerm: string = '';
   filteredStudents: any[] = [];
+
+  // Pagination
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalItems: number = 0;
+  totalPages: number = 0;
 
   constructor(
     private studentService: StudentServiceService,
@@ -33,10 +39,12 @@ export class ListStudentComponent implements OnInit {
   }
 
   loadStudents(): void {
-    this.studentService.getAllStudents().subscribe({
+    this.studentService.getAllStudents(this.currentPage, this.pageSize).subscribe({
       next: (data) => {
-        this.students = data;
-        this.filteredStudents = data;
+        this.students = data.items;
+        this.filteredStudents = data.items;
+        this.totalItems = data.totalCount;
+        this.totalPages = data.totalPages;
       },
       error: (err) => {
         console.error('Failed to fetch students:', err);
@@ -46,7 +54,6 @@ export class ListStudentComponent implements OnInit {
 
   filterStudents() {
     const term = this.searchTerm.toLowerCase();
-    console.log('Filtering with:', term);
     this.filteredStudents = this.students.filter(student =>
       student.firstName.toLowerCase().includes(term) ||
       student.lastName.toLowerCase().includes(term) ||
@@ -55,14 +62,19 @@ export class ListStudentComponent implements OnInit {
     );
   }
 
+  changePage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.loadStudents();
+  }
+
   openStudentModal(studentId: number): void {
-    this.selectedStudentId = studentId;  // Set the selected student ID
-    this.showModal = true;  // Show the modal
-    console.log("Opening modal for Student ID: ", studentId);
+    this.selectedStudentId = studentId;
+    this.showModal = true;
   }
 
   closeStudentModal(): void {
-    this.showModal = false;  // Close the modal
+    this.showModal = false;
   }
 
   manageStudent(id: number): void {
