@@ -41,6 +41,9 @@ export class ListStudentComponent implements OnInit {
   loadStudents(): void {
     this.studentService.getAllStudents(this.currentPage, this.pageSize).subscribe({
       next: (data) => {
+
+        console.log("Fetch Data:" + data);
+
         this.students = data.items;
         this.filteredStudents = data.items;
         this.totalItems = data.totalCount;

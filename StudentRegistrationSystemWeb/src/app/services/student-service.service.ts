@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class StudentServiceService {
 
-  private baseUrl: string = "http://192.168.8.124/api/";
+  private baseUrl: string = "http://localhost:5003/api/";
   constructor(private http: HttpClient) { }
 
   createStudent(studentData: any): Observable<any> {
@@ -16,9 +16,9 @@ export class StudentServiceService {
     return this.http.post(`${this.baseUrl}Students`, studentData);
   }
 
-
   getAllStudents(page: number = 1, pageSize: number = 10): Observable<any> {
-    return this.http.get<any>(`/api/students?pageNumber=${page}&pageSize=${pageSize}`);
+    console.log("Hello Page data loaded: ");
+    return this.http.get<any>(`${this.baseUrl}Students?pageNumber=${page}&pageSize=${pageSize}`);
   }
 
   getStudentById(id: number): Observable<any> {
@@ -27,7 +27,6 @@ export class StudentServiceService {
     console.log("Urltest:" + url);
     return this.http.get<any>(url);  // Use the url variable
   }
-
 
   updateStudent(id: number, data: FormData): Observable<any> {
     return this.http.put(`${this.baseUrl}Students/${id}`, data);
